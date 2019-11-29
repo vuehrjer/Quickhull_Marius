@@ -1,0 +1,7 @@
+﻿  Quickhull.cpp
+C:\Users\micha\OneDrive - FH Technikum Wien\Studium\MGS\1. Semester\ALGO\QuickHull\Quickhull.cpp(26,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\micha\OneDrive - FH Technikum Wien\Studium\MGS\1. Semester\ALGO\QuickHull\Quickhull.cpp(49,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\micha\OneDrive - FH Technikum Wien\Studium\MGS\1. Semester\ALGO\QuickHull\Quickhull.cpp(61,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\micha\OneDrive - FH Technikum Wien\Studium\MGS\1. Semester\ALGO\QuickHull\Quickhull.cpp(67,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\micha\OneDrive - FH Technikum Wien\Studium\MGS\1. Semester\ALGO\QuickHull\Quickhull.cpp(98,14): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+  QuickHull.vcxproj -> C:\Users\micha\OneDrive - FH Technikum Wien\Studium\MGS\1. Semester\ALGO\QuickHull\Debug\QuickHull.exe
