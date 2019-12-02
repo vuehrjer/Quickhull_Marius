@@ -96,11 +96,11 @@ void Quickhull::FindHull(std::vector<Point>& p, const Point& a, const Point& b)
 
 	convexHull.push_back(maxPoint);
 
-	tempHull = convexHull;
+	//tempHull = convexHull;
 
-	tempHull.push_back(extremRight);
+	//tempHull.push_back(extremRight);
 
-	allHulls.push_back(tempHull);
+	allHulls.push_back(convexHull);
 
 	std::vector<Point> right;
 
