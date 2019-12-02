@@ -1,0 +1,12 @@
+﻿  main.cpp
+C:\Users\mariu\Quickhull\main.cpp(59,10): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\mariu\Quickhull\main.cpp(76,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\mariu\Quickhull\main.cpp(83,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\mariu\Quickhull\main.cpp(172,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+  Code wird generiert.
+C:\Users\mariu\Quickhull\main.cpp(221): warning C4715: "SDL_main": Nicht alle Codepfade geben einen Wert zurück.
+  1 of 383 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Codegenerierung ist abgeschlossen.
+  QuickHull.vcxproj -> C:\Users\mariu\Quickhull\Release\QuickHull.exe

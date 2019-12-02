@@ -4,13 +4,14 @@
 #include <vector>
 #include <math.h>
 #include <algorithm>
-
+#include "Clock.h"
 #include "Point.h"
 #include "Quickhull.h"
 #include "SDL2-2.0.10/include/SDL.h"
 
-#define WIDTH 640
-#define HEIGHT 400
+
+#define WIDTH 3000
+#define HEIGHT 5000
 
 SDL_Window* window;
 SDL_bool done;
@@ -22,6 +23,7 @@ std::vector<Point> pointsRight;
 std::vector<Point> convexHull;
 std::vector<Point> temporaryHull;
 std::vector<std::vector<Point> > allTheHulls;
+bool render;
 
 Point extremLeft;
 Point extremRight;
@@ -30,7 +32,7 @@ int step = 0;
 
 void Update()
 {
-	std::string line;
+	/*std::string line;
 	std::ifstream myfile;
 	myfile.open("randomFloats.txt");
 
@@ -49,8 +51,8 @@ void Update()
 			points.push_back(Point(x, y));
 		}
 
-	}
-	Quickhull qh(points);
+	}*/
+	Quickhull qh(points, render);
 	allTheHulls = qh.getAllHulls();
 	temporaryHull = allTheHulls[step];
 	
@@ -69,19 +71,22 @@ void Render()
 	{
 		SDL_RenderDrawPointF(renderer, point.x / scale, point.y / scale);
 	}
-
-	for (int i = 0; i < temporaryHull.size(); i++)
-	{
-		int begin = i;
-		int end = i + 1;
-		if (end == temporaryHull.size()) end = 0;
-
-		for (int i = 0; i < points.size() -1; i++)
+	for(int j = 0; j < step; j++)
+	{ 
+		for (int i = 0; i < allTheHulls[j].size(); i++)
 		{
-			Point p1 = temporaryHull[begin];
-			Point p2 = temporaryHull[end];
+			int begin = i;
+			int end = i + 1;
+			if (end == allTheHulls[j].size()) end = 0;
 
-			SDL_RenderDrawLineF(renderer, p1.x / scale, p1.y / scale, p2.x / scale, p2.y / scale);
+
+			for (int i = 0; i < points.size() - 1; i++)
+			{
+				Point p1 = allTheHulls[j][begin];
+				Point p2 = allTheHulls[j][end];
+
+				SDL_RenderDrawLineF(renderer, p1.x / scale, p1.y / scale, p2.x / scale, p2.y / scale);
+			}
 		}
 
 	}
@@ -126,7 +131,9 @@ void OnEvent(SDL_Event* event)
 
 int main(int argc, char* argv[])
 {
-	std::string line;
+
+	render = false;
+	/*std::string line;
 	std::ifstream myfile;
 	myfile.open("randomFloats.txt");
 
@@ -146,37 +153,71 @@ int main(int argc, char* argv[])
 		}
 
 	}
+	*/
+	std::vector<float> xValues;
+	std::vector<float> yValues;
+	srand(0);
+	for (int i = 0; i < 1000000; i++)
+	{
+		float x = (float)rand() / RAND_MAX * WIDTH + 50;
+		xValues.push_back(x);
+	}
 
-	Quickhull ch(points);
+	for (int i = 0; i < 1000000; i++)
+	{
+		float y = (float)rand() / RAND_MAX * HEIGHT + 100;
+		yValues.push_back(y);
+	}
+	if (xValues.size() == yValues.size()) {
+		for (int i = 0; i < xValues.size(); i++)
+		{
+			points.push_back(Point(xValues[i], yValues[i]));
+		}
+
+	}
+	else
+	{
+		std::cout << "x and y Values are unequal" << std::endl;
+		return -1;
+	}
+	
+	Clock clock;
+	std::chrono::high_resolution_clock::time_point start = clock.getStartTime();
+	Quickhull ch(points, render);
+	std::chrono::high_resolution_clock::time_point end = clock.getEndTime();
+	clock.printTime(start, end);
 	convexHull = ch.GetHull();
-	if (SDL_Init(SDL_INIT_VIDEO) == 0) {
-		window = NULL;
-		renderer = NULL;
+	if (render)
+	{
+		if (SDL_Init(SDL_INIT_VIDEO) == 0) {
+			window = NULL;
+			renderer = NULL;
 
-		if (SDL_CreateWindowAndRenderer(WIDTH, HEIGHT, 0, &window, &renderer) == 0) {
-			//SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-			done = SDL_FALSE;
+			if (SDL_CreateWindowAndRenderer(750, 700, 0, &window, &renderer) == 0) {
+				//SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+				done = SDL_FALSE;
 
-			//main Loop
-			while (!done) {
-				SDL_Event event;
-				Render();
+				//main Loop
+				while (!done) {
+					SDL_Event event;
+					Render();
 
-				while (SDL_PollEvent(&event)) {
-					OnEvent(&event);
+					while (SDL_PollEvent(&event)) {
+						OnEvent(&event);
+					}
 				}
 			}
-		}
 
-		if (renderer) {
-			SDL_DestroyRenderer(renderer);
+			if (renderer) {
+				SDL_DestroyRenderer(renderer);
+			}
+			if (window) {
+				SDL_DestroyWindow(window);
+			}
 		}
-		if (window) {
-			SDL_DestroyWindow(window);
-		}
+		SDL_Quit();
+		return 0;
 	}
-	SDL_Quit();
-	return 0;
 }
 
 

@@ -1,0 +1,21 @@
+﻿  Clock.cpp
+  main.cpp
+  Point.cpp
+  Quickhull.cpp
+  Code wird generiert...
+C:\Users\mariu\Quickhull\main.cpp(159,12): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
+C:\Users\mariu\Quickhull\main.cpp(221): warning C4715: "SDL_main": Nicht alle Codepfade geben einen Wert zurück.
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "SDL_DestroyWindow" in Funktion "SDL_main".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "SDL_PollEvent" in Funktion "SDL_main".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "SDL_CreateWindowAndRenderer" in Funktion "SDL_main".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "SDL_RenderSetScale" in Funktion ""void __cdecl Render(void)" (?Render@@YAXXZ)".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "SDL_SetRenderDrawColor" in Funktion ""void __cdecl Render(void)" (?Render@@YAXXZ)".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "SDL_RenderClear" in Funktion ""void __cdecl Render(void)" (?Render@@YAXXZ)".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "SDL_RenderDrawPointF" in Funktion ""void __cdecl Render(void)" (?Render@@YAXXZ)".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "SDL_RenderDrawLineF" in Funktion ""void __cdecl Render(void)" (?Render@@YAXXZ)".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "SDL_RenderPresent" in Funktion ""void __cdecl Render(void)" (?Render@@YAXXZ)".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "SDL_DestroyRenderer" in Funktion "SDL_main".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "SDL_Init" in Funktion "SDL_main".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "SDL_Quit" in Funktion "SDL_main".
+MSVCRTD.lib(exe_main.obj) : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "main" in Funktion ""int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)".
+C:\Users\mariu\Quickhull\x64\Debug\QuickHull.exe : fatal error LNK1120: 13 nicht aufgelöste Externe

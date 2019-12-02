@@ -1,4 +1,7 @@
-﻿  Quickhull.cpp
-C:\Users\mariu\Quickhull\Quickhull.cpp(115,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
-C:\Users\mariu\Quickhull\Quickhull.cpp(121,20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+﻿  main.cpp
+C:\Users\mariu\Quickhull\main.cpp(59,10): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\mariu\Quickhull\main.cpp(76,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\mariu\Quickhull\main.cpp(83,22): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\mariu\Quickhull\main.cpp(172,21): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+C:\Users\mariu\Quickhull\main.cpp(221): warning C4715: "SDL_main": Nicht alle Codepfade geben einen Wert zurück.
   QuickHull.vcxproj -> C:\Users\mariu\Quickhull\Debug\QuickHull.exe

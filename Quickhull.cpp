@@ -1,7 +1,7 @@
 #include "Quickhull.h"
 #include <iostream>
 
-Quickhull::Quickhull(std::vector<Point> p)
+Quickhull::Quickhull(std::vector<Point> p, bool render)
 {
 	std::vector<Point> extremes;
 	Point extremLeft(640, 0);
@@ -20,6 +20,7 @@ Quickhull::Quickhull(std::vector<Point> p)
 		}
 	}
 
+
 	std::vector<Point> pointsLeft;
 	std::vector<Point> pointsRight;
 	for (auto point : p)
@@ -37,21 +38,45 @@ Quickhull::Quickhull(std::vector<Point> p)
 		else continue;
 
 	}
-	extremes.push_back(extremLeft);
-	extremes.push_back(extremRight);
-	allHulls.push_back(extremes);
+	if (render)
+	{
+		extremes.push_back(extremLeft);
+		extremes.push_back(extremRight);
+		allHulls.push_back(extremes);
+	}
+	float maxDistance = 0.0f;
+	Point maxPoint;
+	for (Point point : p)
+	{
+		float det = sign(extremLeft, extremRight, point);
 
+		float distance = dist(extremLeft, extremRight, point);
+		if (distance > maxDistance && det > 0)
+		{
+			maxDistance = distance;
+			maxPoint = point;
+		}
+	}
 
+	if (render)
+	{
+		std::vector<Point> secondStep;
+		secondStep.push_back(extremLeft);
+		secondStep.push_back(maxPoint);
+		secondStep.push_back(extremRight);
+
+		allHulls.push_back(secondStep);
+	}
 	convexHull.push_back(extremLeft);
 
-	FindHull(pointsLeft, extremLeft, extremRight);
+	FindHull(pointsLeft, extremLeft, extremRight, render);
 
 	convexHull.push_back(extremRight);
 
-	FindHull(pointsRight, extremRight, extremLeft);
+	FindHull(pointsRight, extremRight, extremLeft, render);
 }
 
-void Quickhull::FindHull(std::vector<Point>& p, const Point& a, const Point& b)
+void Quickhull::FindHull(std::vector<Point>& p, const Point& a, const Point& b, bool render)
 {
 
 	std::vector<Point> tempHull;
@@ -91,17 +116,20 @@ void Quickhull::FindHull(std::vector<Point>& p, const Point& a, const Point& b)
 			extremRight.y = point.y;
 		}
 	}
+	if (render)
+	{
+		tempHull = convexHull;
+		tempHull.push_back(maxPoint);
 
-	FindHull(left, a, maxPoint);
+		allHulls.push_back(tempHull);
+	}
+	FindHull(left, a, maxPoint, render);
 
 	convexHull.push_back(maxPoint);
-
-	//tempHull = convexHull;
-
-	//tempHull.push_back(extremRight);
-
-	allHulls.push_back(convexHull);
-
+	if (render)
+	{
+		allHulls.push_back(convexHull);
+	}
 	std::vector<Point> right;
 
 	for (auto pt : p)
@@ -134,7 +162,7 @@ void Quickhull::FindHull(std::vector<Point>& p, const Point& a, const Point& b)
 	
 	//remove points inside
 
-	FindHull(right, maxPoint, b);
+	FindHull(right, maxPoint, b, render);
 
 }
 
