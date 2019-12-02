@@ -20,101 +20,41 @@ std::vector<Point> points;
 std::vector<Point> pointsLeft;
 std::vector<Point> pointsRight;
 std::vector<Point> convexHull;
+std::vector<Point> temporaryHull;
+std::vector<std::vector<Point> > allTheHulls;
 
 Point extremLeft;
 Point extremRight;
 int step = 0;
 
-//is Point(p1) left or right side of line(p2,p3)
-float sign(Point p1, Point p2, Point p3)
-{
-	return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
-}
-
-//Distance from line(p2,p3) and point(p1)
-float dist(Point p1, Point p2, Point p3)
-{
-	return fabs((p1.y - p2.y) * (p3.x - p2.x) -
-		(p3.y - p2.y) * (p1.x - p2.x));
-}
 
 void Update()
 {
-	switch (step)
+	std::string line;
+	std::ifstream myfile;
+	myfile.open("randomFloats.txt");
+
+	if (myfile.is_open())
 	{
-	case 0:
-		if (extremLeft.x == 0 && extremRight.x == 0)
+		std::getline(myfile, line);
+		int numberCount = std::stoi(line);
+
+
+		while (std::getline(myfile, line))
 		{
-			extremLeft.x = WIDTH;
-			for (Point point : points)
-			{
-				if (point.x < extremLeft.x)
-				{
-					extremLeft.x = point.x;
-					extremLeft.y = point.y;
-				}
-				if (point.x > extremRight.x)
-				{
-					extremRight.x = point.x;
-					extremRight.y = point.y;
-				}
-			}
-			convexHull.push_back(extremLeft);
-			convexHull.push_back(extremRight);
-		}
-		break;
-	case 1:
-		for (int i = 0; i < points.size(); i++)
-		{
-			Point point = points[i];
-			float det = sign(point, extremLeft, extremRight);
-			if (det < 0)
-			{
-				pointsLeft.push_back(point);
-				continue;
-			}
-			else if (det > 0)
-			{
-				pointsRight.push_back(point);
-				continue;
-			}
+			float x = std::stof(line.substr(0, line.find(','))) * WIDTH;
+			float y = std::stof(line.substr(line.find(',') + 1, line.length())) * HEIGHT;
+
+
+			points.push_back(Point(x, y));
 		}
 
-		break;
-	case 2:
-		float maxDistance = 0.0f;
-		Point maxPoint;
-		for (int i = 0; i < pointsLeft.size(); i++)
-		{
-			Point point = pointsLeft[i];
-			float distance = dist(point, extremLeft, extremRight);
-			if (distance > maxDistance)
-			{
-				maxDistance = distance;
-				maxPoint = point;
-			}
-		}
-		convexHull.push_back(maxPoint);
-		maxDistance = 0.0f;
-		for (int i = 0; i < pointsRight.size(); i++)
-		{
-			Point point = pointsRight[i];
-			float distance = dist(point, extremLeft, extremRight);
-			if (distance > maxDistance)
-			{
-				maxDistance = distance;
-				maxPoint = point;
-
-			}
-		}
-		convexHull.push_back(maxPoint);
-		iter_swap(convexHull.begin(), convexHull.begin() + convexHull.size()-1);
-		break;
 	}
-
-	step++;
-	if (step == 5) step = 0;
+	Quickhull qh(points);
+	allTheHulls = qh.getAllHulls();
+	temporaryHull = allTheHulls[step];
 	
+	if(step < allTheHulls.size() -1) step++;
 }
 
 
@@ -130,14 +70,19 @@ void Render()
 		SDL_RenderDrawPointF(renderer, point.x / scale, point.y / scale);
 	}
 
-	for (int i = 0; i < convexHull.size(); i++)
+	for (int i = 0; i < temporaryHull.size(); i++)
 	{
 		int begin = i;
 		int end = i + 1;
-		if (end == convexHull.size()) end = 0;
-		Point p1 = convexHull[begin];
-		Point p2 = convexHull[end];
-		SDL_RenderDrawLineF(renderer, p1.x/scale, p1.y / scale, p2.x / scale, p2.y / scale);
+		if (end == temporaryHull.size()) end = 0;
+
+		for (int i = 0; i < points.size() -1; i++)
+		{
+			Point p1 = temporaryHull[begin];
+			Point p2 = temporaryHull[end];
+
+			SDL_RenderDrawLineF(renderer, p1.x / scale, p1.y / scale, p2.x / scale, p2.y / scale);
+		}
 
 	}
 	//SDL_RenderDrawLineF(renderer, extremLeft.x / scale, extremLeft.y / scale, extremRight.x / scale, extremRight.y / scale);
